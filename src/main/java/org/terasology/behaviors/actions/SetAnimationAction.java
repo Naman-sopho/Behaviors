@@ -31,7 +31,7 @@ import java.util.Random;
 /**
  * Plays a animation from a animation set and sets the animation pool to pick animation to play from.
  * <p/>
- * The node stays forever in status RUNNING.
+ * The node returns SUCCESS after the animation is played completely. 
  */
 @API
 @BehaviorAction(name = "animation")
@@ -52,6 +52,7 @@ public class SetAnimationAction extends BaseAction {
     public void construct(Actor actor) {
         SkeletalMeshComponent skeletalMesh = actor.getComponent(SkeletalMeshComponent.class);
         if (play != null) {
+            // Play a random animation from the specified pool
             List<?> animationListToPlay = (List<?>) actor.getComponentField(play);
             if (animationListToPlay != null) {
                 skeletalMesh.animation = (MeshAnimation) animationListToPlay.get(
@@ -62,6 +63,7 @@ public class SetAnimationAction extends BaseAction {
             }
         }
         if (loop != null) {
+            // Play all the animations in the specified pool
             skeletalMesh.animationPool.clear();
             List<?> animationListToLoop = (List<?>) actor.getComponentField(loop);
             if (animationListToLoop != null) {
